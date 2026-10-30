@@ -1,0 +1,41 @@
+# ---- 密钥 / 本机配置（绝不入库）----
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.example
+*.pem
+*.key
+*.p12
+id_rsa*
+id_ed25519*
+
+# ---- Python ----
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---- 运行产物 / 本地数据库 ----
+.tmp/
+**/.tmp/
+outputs/
+**/outputs/
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# ---- 编辑器 / 系统 ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# ---- 压缩包 / 临时大文件 ----
+*.zip
+*.tar.gz
+*.7z

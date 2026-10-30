@@ -1,0 +1,53 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: verify-lab-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-verify_lab}
+      MYSQL_USER: ${MYSQL_USER:-lab}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-labpass}
+      TZ: Asia/Shanghai
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      # 首次启动时自动执行建表脚本
+      - ./sql/schema_mysql.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 20s
+
+  # 可选：docker compose --profile bot up -d
+  # 需要先在 .env 里填 BOT_TOKEN 和 ADMIN_USER_ID
+  bot:
+    build: .
+    container_name: verify-lab-bot
+    profiles: ["bot"]
+    restart: unless-stopped
+    environment:
+      DB_BACKEND: mysql
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: ${MYSQL_USER:-lab}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-labpass}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-verify_lab}
+      BOT_TOKEN: ${BOT_TOKEN:-}
+      ADMIN_USER_ID: ${ADMIN_USER_ID:-0}
+      BOT_CONCURRENT: ${BOT_CONCURRENT:-32}
+      RENDER_BACKEND: ${RENDER_BACKEND:-pillow}
+      OUTPUTS_DIR: /data/outputs
+      TZ: Asia/Shanghai
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - bot-outputs:/data/outputs
+
+volumes:
+  mysql-data:
+  bot-outputs:

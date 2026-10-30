@@ -1,0 +1,39 @@
+{
+  "session_id": "session-8348d9d1-186f-44c2-b644-b27851afdd4f",
+  "source": "C:\\Users\\gbc\\.dsh\\sessions\\--C-Users-gbc-Documents-deepseek-harness-default-workspace--\\session-8348d9d1-186f-44c2-b644-b27851afdd4f\\session.v4.jsonl.zstd",
+  "title": "查看 tgbot-verify 项目",
+  "exported_at": "2026-10-30T00:19:12",
+  "time_range": [
+    "2026-10-29 19:10:00",
+    "2026-10-30 00:19:10"
+  ],
+  "events": 1305,
+  "decompressed_bytes": 4894554,
+  "stats": {
+    "session": 1,
+    "skipped": 684,
+    "turns": 19,
+    "user_messages": 20,
+    "injected_messages": 9,
+    "assistant_messages": 158,
+    "tool_calls": 203,
+    "tool_results": 202,
+    "deliverables": 5,
+    "approvals": 2
+  },
+  "tool_calls_by_name": {
+    "pwsh": 66,
+    "edit": 54,
+    "write": 38,
+    "read": 27,
+    "read_image": 9,
+    "present": 5,
+    "web_fetch": 2,
+    "skill": 1,
+    "ask_user_question": 1
+  },
+  "files": {
+    "session.jsonl": 4894554,
+    "conversation.md": 1047041
+  }
+}
