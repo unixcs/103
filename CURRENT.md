@@ -8,6 +8,7 @@
 - 新设备接手：先读 `docs/HANDOFF.md`（含 Linux / Windows 步骤），再 `git clone`、建 `.venv`、复制 `.env.example` 重建 `.env`、跑默认测试
 - CI：`.github/workflows/tests.yml`，每次 push/PR 自动跑 SQLite 默认测试
 - 仓库含 `chat-51afdd4f/` 会话导出（接手背景）；公开前已扫描无 Token / PAT / 云密钥 / 私钥 / 手机号 / 身份证号 / 内网 IP
+- 已启用 GitHub secret scanning + push protection，误提交密钥会被拦
 - Windows 尚未实机验收：代码含 Windows 字体回退与 `.bat`，但本轮只在 Linux 跑过
 
 ## 2026-10-30 · Bot 落地 + 墨菲测试完成；真实入站待主人 /start

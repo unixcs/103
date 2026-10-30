@@ -453,7 +453,7 @@ python bot.py
 
 ### 8.2 当前公开状态
 
-仓库已改为 **public**。公开前已扫描：
+仓库已改为 **public**，并已启用 GitHub 的 **secret scanning + push protection**（以后误提交密钥会被拦）。公开前已扫描：
 
 - 无 Telegram Bot Token
 - 无 GitHub PAT

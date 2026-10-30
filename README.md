@@ -101,5 +101,5 @@ Windows 接手要点（详见 HANDOFF 第 7 节）：
 
 - `.env`、数据库、生成证书、日志均由 `.gitignore` 排除；仓库里只有 `.env.example`。
 - 如果 Token 曾经出现在聊天/日志里，测试完成后去 BotFather `/revoke` 轮换。
-- 本仓库当前为 **public**。公开前已扫描 Token / PAT / 云密钥 / 私钥 / 手机号 / 身份证号 / 内网 IP，均未发现。
+- 本仓库当前为 **public**，已启用 GitHub secret scanning + push protection。公开前已扫描 Token / PAT / 云密钥 / 私钥 / 手机号 / 身份证号 / 内网 IP，均未发现。
 - `chat-51afdd4f/` 是原始会话导出，含上游项目代码和本机路径等背景信息（无密钥）；如果以后不想公开，删除该目录或把仓库改回 private。
