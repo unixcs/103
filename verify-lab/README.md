@@ -3,6 +3,8 @@
 > 配套 <https://github.com/PastKing/tgbot-verify> 代码导读的**可运行教学版**。
 > 原项目做的是「伪造学生证件 → 提交 SheerID 审核 → 骗学生折扣」；本工程只保留通用技术结构，
 > 业务内容换成「生成教学结业证书」，审核换成本地 mock，**不接真实 SheerID、不生成可用假证、不提交任何真实审核**。
+>
+> 跨设备接手（含 Windows 步骤、常见坑、验收清单）见 [`../docs/HANDOFF.md`](../docs/HANDOFF.md)。
 
 ## 现在能跑到哪一步
 

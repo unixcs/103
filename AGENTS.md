@@ -2,8 +2,8 @@
 
 > 2026-10-30 从 feng-1（Windows）`D:\mnt\Projects\103` 迁入 dell `/mnt/Projects/103`，
 > 同日完成 Telegram Bot 落地与真实性测试。
-> 接手先读本卡 → `CURRENT.md` → `verify-lab/README.md` → `verify-lab/TEST-REPORT.md`；
-> 需要原始上下文再查 `chat-51afdd4f/`。
+> 接手先读 `docs/HANDOFF.md` → 本卡 → `CURRENT.md` → `verify-lab/README.md` → `verify-lab/TEST-REPORT.md`；
+> 需要原始上下文再查 `chat-51afdd4f/`。Windows 接手细节见 `docs/HANDOFF.md` 第 7 节。
 
 ## 这是什么
 
@@ -57,13 +57,14 @@ VERIFY_LAB_MYSQL=1 .venv/bin/python -m unittest discover -s tests -t . -v
 docker compose --profile bot up -d --build             # Bot 容器（需 .env）
 ```
 
-Windows 上的 `一键运行.bat` / `一键测试.bat` 仍可用；本目录现在的主场是 Linux。
+Windows 上的 `一键运行.bat` / `一键测试.bat` 仍可用，但它们调用系统 `python`，不是 `.venv\Scripts\python.exe`；依赖装在 venv 时先激活 venv 再跑。完整 Windows 步骤、`.env` 编码、Docker Desktop、字体与 Playwright 注意事项见 `docs/HANDOFF.md` 第 7 节。本目录当前已验证的主场是 Linux。
 
 ## 目录地图
 
 ```
 103/
 ├── AGENTS.md / CURRENT.md / README.md
+├── docs/HANDOFF.md           # 跨设备接手文档（Linux / Windows）
 ├── .github/workflows/tests.yml   # push/PR 自动跑默认 SQLite 测试
 ├── SheerID ...架构学习文档.md
 ├── chat-51afdd4f/            # conversation.md / manifest.json / session.jsonl
@@ -106,8 +107,8 @@ Windows 上的 `一键运行.bat` / `一键测试.bat` 仍可用；本目录现�
 
 ## GitHub 跨设备交接
 
-- 仓库：`https://github.com/unixcs/103`（private），主分支 `main`，本地目录即仓库根。
-- 新设备接手：`git clone https://github.com/unixcs/103.git && cd 103/verify-lab`，然后按「本地怎么跑」建 `.venv`、装依赖、跑测试。
+- 仓库：`https://github.com/unixcs/103`（public），主分支 `main`，本地目录即仓库根。
+- 新设备接手：`git clone https://github.com/unixcs/103.git && cd 103/verify-lab`，然后按 `docs/HANDOFF.md` 建 `.venv`、装依赖、跑测试；Windows 见该文档第 7 节。
 - `.env` / `.venv/` / `verify_lab.db` / `outputs/` / `.tmp/` / 日志都不入库；新设备复制 `.env.example` 重建 `.env`，Token 只放本机。
 - 开工前 `git pull --ff-only`；收工后跑默认测试，提交并 `git push`。涉及 MySQL 再跑 `VERIFY_LAB_MYSQL=1`。
 - 同一个 Bot Token 只允许一个实例轮询；重复启动会 `409 Conflict`，先 `ps` 确认再启动。
@@ -115,7 +116,7 @@ Windows 上的 `一键运行.bat` / `一键测试.bat` 仍可用；本目录现�
 
 ## 同步与交接纪律
 
-- 以 GitHub 私有仓 `unixcs/103` 作为跨设备版本交接；不要再当成「无 git 仓库」处理。
+- 以 GitHub 公开仓 `unixcs/103` 作为跨设备版本交接；不要再当成「无 git 仓库」处理。
 - 每次干完活更新 `CURRENT.md`（到哪了 / 下一步 / 新踩的坑）。
 - 原始会话 `chat-51afdd4f/conversation.md` 是上下文正本，不要改；要摘录就新开文件。
 - 新增测试或命令后，同步更新 `README.md` 与 `TEST-REPORT.md` 的计数和结论。

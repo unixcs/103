@@ -1,13 +1,14 @@
 # CURRENT — 103 热状态（干完活更新这里）
 
-## 2026-10-30 · GitHub 跨设备交接仓已建立
+## 2026-10-30 · GitHub 跨设备交接仓已建立并公开
 
 - 本地目录 `/mnt/Projects/103` 即 Git 仓库根，主分支 `main`
-- 远端：`https://github.com/unixcs/103`（**private**）
+- 远端：`https://github.com/unixcs/103`（**public**）
 - 密钥与本机产物不入库：`.env`、`.venv/`、`*.db`、`outputs/`、`.tmp/`、日志均由 `.gitignore` 挡住
-- 新设备接手：`git clone` 后按 `README.md` 建 `.venv`、复制 `.env.example` 重建 `.env`、跑默认测试
+- 新设备接手：先读 `docs/HANDOFF.md`（含 Linux / Windows 步骤），再 `git clone`、建 `.venv`、复制 `.env.example` 重建 `.env`、跑默认测试
 - CI：`.github/workflows/tests.yml`，每次 push/PR 自动跑 SQLite 默认测试
-- 仓库含 `chat-51afdd4f/` 会话导出（接手背景，已扫描无 Token/手机号/身份证号）；转 public 前需再评估
+- 仓库含 `chat-51afdd4f/` 会话导出（接手背景）；公开前已扫描无 Token / PAT / 云密钥 / 私钥 / 手机号 / 身份证号 / 内网 IP
+- Windows 尚未实机验收：代码含 Windows 字体回退与 `.bat`，但本轮只在 Linux 跑过
 
 ## 2026-10-30 · Bot 落地 + 墨菲测试完成；真实入站待主人 /start
 
@@ -67,11 +68,13 @@ Python 3.13.5 · Pillow 13.0.0 · python-telegram-bot 22.8 · Playwright 1.64.1�
 2. **真实 MySQL 测试默认跳过**：必须显式 `VERIFY_LAB_MYSQL=1`，避免没起库的机器误报失败。
 3. **Windows 脚本仍是旧文案**：`一键测试.bat` 的提示没有写测试数量，可继续用；`零基础说明.md` 已改为 Linux 优先。
 4. **GitHub 仓库已建但尚未接入 `proj-sync`**：目前用原生 `git pull --ff-only` / `git push` 交接；要进三机同步网再登记 `proj-sync.conf`。
-5. **顶层架构文档有空洞**：§2「专用数据表结构」和「核心读写源码」是空代码块，只能当提纲读，细节以 `verify-lab/app/` 实现为准。
-6. **Token 已在聊天里出现过**：测试结束后建议在 BotFather 里 `/revoke` 轮换，并把新 Token 只写进 `.env`（权限 600）。
+5. **Windows 未实机验收**：Pillow 中文字体、`.env` 无 BOM、Docker Desktop MySQL、Playwright Chromium、两个 `.bat` 都需要在 Windows 上按 `docs/HANDOFF.md` 第 7 节跑一遍；注意 `.bat` 调用系统 `python`，依赖装在 venv 时先激活。
+6. **顶层架构文档有空洞**：§2「专用数据表结构」和「核心读写源码」是空代码块，只能当提纲读，细节以 `verify-lab/app/` 实现为准。
+7. **Token 已在聊天里出现过**：测试结束后建议在 BotFather 里 `/revoke` 轮换，并把新 Token 只写进 `.env`（权限 600）。
 
 ## 下一步（候选，未拍板）
 
 1. 主人在 Telegram 给 `@yunbian666_bot` 发 `/start` 后，把真实 user id 写进 `.env` 的 `ADMIN_USER_ID`，重启 Bot，跑真实管理员命令与证书发送验收（不提交任何真实身份材料）。
-2. 若要纳入多机同步：确认后建 GitHub 私仓并登记 `proj-sync.conf`（注意会话导出 4.9MB，推之前决定是否排除）。
-3. 若要继续小说证书：从 Windows 把 `novel/make_guild_cert.py` 与预设迁过来（不在 103 内）。
+2. 在 Windows 上按 `docs/HANDOFF.md` 第 7 节做一次最小验收，把结果回写到文档第 4.3 节。
+3. 若要纳入多机同步：确认后登记 `proj-sync.conf`；当前原生 git 交接已够用。
+4. 若要继续小说证书：从 Windows 把 `novel/make_guild_cert.py` 与预设迁过来（不在 103 内）。

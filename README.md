@@ -6,6 +6,8 @@
 
 ## 现在有什么
 
+> 跨设备接手先看 [`docs/HANDOFF.md`](docs/HANDOFF.md)：Linux / Windows 的完整步骤、已知坑、验收清单都在里面。
+
 | 能力 | 状态 |
 |---|---|
 | Telegram Bot 全部用户/管理员命令 | ✅ 已实现 |
@@ -54,10 +56,18 @@ cp .env.example .env          # 填 BOT_TOKEN / ADMIN_USER_ID
 
 ## 跨设备接手顺序
 
-1. 先读 [`AGENTS.md`](AGENTS.md)（30 秒装载卡：红线、命令、目录、已验证状态）。
-2. 再读 [`CURRENT.md`](CURRENT.md)（最近到哪了、已知坑、下一步）。
-3. 需要细节进 [`verify-lab/README.md`](verify-lab/README.md) 和 [`verify-lab/TEST-REPORT.md`](verify-lab/TEST-REPORT.md)。
-4. 原始设计上下文在 [`chat-51afdd4f/`](chat-51afdd4f/)，只读，不要改。
+1. 先读 [`docs/HANDOFF.md`](docs/HANDOFF.md)（完整接手文档：状态、Linux/Windows 步骤、坑、验收清单）。
+2. 再读 [`AGENTS.md`](AGENTS.md)（30 秒装载卡：红线、命令、目录、已验证状态）。
+3. 再读 [`CURRENT.md`](CURRENT.md)（最近到哪了、已知坑、下一步）。
+4. 需要细节进 [`verify-lab/README.md`](verify-lab/README.md) 和 [`verify-lab/TEST-REPORT.md`](verify-lab/TEST-REPORT.md)。
+5. 原始设计上下文在 [`chat-51afdd4f/`](chat-51afdd4f/)，只读，不要改。
+
+Windows 接手要点（详见 HANDOFF 第 7 节）：
+
+- 克隆到纯英文、非 OneDrive 路径，例如 `D:\Projects\103`。
+- 用 `py -3.13 -m venv .venv`，激活 `.venv\Scripts\Activate.ps1`，之后统一用 `python`。
+- `.env` 用 `copy .env.example .env` 生成，保存为 UTF-8 **无 BOM**。
+- 两个 `.bat` 脚本调用系统 `python`，若依赖只装在 `.venv`，请先激活 venv 或用 `.venv\Scripts\python.exe`。
 
 跨设备约定：
 
@@ -73,6 +83,7 @@ cp .env.example .env          # 填 BOT_TOKEN / ADMIN_USER_ID
 ├── AGENTS.md                     # AI 会话装载卡 / 红线 / 命令
 ├── CURRENT.md                    # 热状态与下一步
 ├── README.md                     # 本文件
+├── docs/HANDOFF.md               # 跨设备接手文档（Linux / Windows）
 ├── SheerID ...架构学习文档.md     # 原项目纯技术架构分析
 ├── chat-51afdd4f/                # 2026-10-29 原始会话导出（只读上下文）
 └── verify-lab/                   # 可运行教学工程
@@ -90,4 +101,5 @@ cp .env.example .env          # 填 BOT_TOKEN / ADMIN_USER_ID
 
 - `.env`、数据库、生成证书、日志均由 `.gitignore` 排除；仓库里只有 `.env.example`。
 - 如果 Token 曾经出现在聊天/日志里，测试完成后去 BotFather `/revoke` 轮换。
-- 本仓库默认 **private**；要公开前请先确认会话导出与架构文档可以公开。
+- 本仓库当前为 **public**。公开前已扫描 Token / PAT / 云密钥 / 私钥 / 手机号 / 身份证号 / 内网 IP，均未发现。
+- `chat-51afdd4f/` 是原始会话导出，含上游项目代码和本机路径等背景信息（无密钥）；如果以后不想公开，删除该目录或把仓库改回 private。
